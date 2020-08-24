@@ -1,0 +1,92 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Project deno",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "deno",
+            "runtimeArgs": [
+                "run",
+                "--unstable",
+                "--inspect-brk",
+                "-A",
+                "src/index.ts"
+            ],
+            "port": 9229,
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+        },
+        {
+            "name": "Debug Project ts-node",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "node",
+            "runtimeArgs": [
+                "--nolazy",
+                "-r",
+                "ts-node/register/transpile-only"
+            ],
+            "args": [
+                "src/index.ts"
+            ],
+            "cwd": "${workspaceRoot}",
+            "skipFiles": [
+                "<node_internals>/**",
+                "node_modules/**"
+            ],
+            // "console": "integratedTerminal",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Project Build",
+            // we test in `build` to make cleanup fast and easy
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "node",
+            "args": [
+                "build/index.js"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/build/**/*.js"
+            ],
+            "skipFiles": [
+                "<node_internals>/**/*.js",
+                "${workspaceFolder}/node_modules/**/*.js"
+            ],
+            "preLaunchTask": "npm: build",
+            "stopOnEntry": true,
+            "smartStep": true,
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "env": {
+                "TYPESCRIPT_STARTER_REPO_URL": "${workspaceFolder}"
+            },
+            /*
+      "internalConsoleOptions": "openOnSessionStart",
+      "outputCapture": "std"*/
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Spec",
+            "program": "${workspaceRoot}/.vscode/debug-ts.js",
+            "args": [
+                "${file}"
+            ],
+            "skipFiles": [
+                "<node_internals>/**/*.js"
+            ],
+            // Consider using `npm run watch` or `yarn watch` for faster debugging
+            // "preLaunchTask": "npm: build",
+            // "smartStep": true,
+            "runtimeArgs": [
+                "--nolazy"
+            ]
+        }
+    ]
+}
